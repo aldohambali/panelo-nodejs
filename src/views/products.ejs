@@ -1,0 +1,152 @@
+<%- include("partials/_header") %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-sm-5">
+      <form action="/filter" method="POST">
+      <div class="row mb-4">
+        <div class="col-4">
+          
+          <select class="form-select" id="category" name="category">
+            <option value="">- Kategori -</option>
+            <%  if (category) { %> <% for(var i = 0; i < category.length; i++) { %>
+              <option value="<%= category[i].id %>"><%= category[i].name %></option>
+            <% } %> <% } %>
+
+          </select>
+        </div>
+        <div class="col-4">
+          <input type="number" class="form-control" id="limit" name="limit" placeholder="Jumlah data">
+          
+        </div>
+        <div class="col-4">
+          <button type="submit" class="btn btn-secondary w-100">Tampilkan</button>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6">
+      <div class="row mb-4">
+        <div class="col-6 col-sm-3">
+          <a href="/add" class="btn btn-dark w-100">Tambah Produk</a>
+        </div>
+        <div class="col-6 col-sm-3">
+          <form  action="/export-xml" method="POST">
+            <button type="submit" class="btn btn-secondary w-100">Export XML</button>
+          </form>
+        </div>
+        <div class="col-6 col-sm-3">
+          <form  action="/export-xls" method="POST">
+            <button type="submit" class="btn btn-secondary w-100">Export XLS</button>
+          </form>
+        </div>
+        <div class="col-6 col-sm-3">
+          <a class="btn btn-danger w-100" id="resetBtn" data-bs-toggle="modal" data-bs-target="#resetModal" >Reset</a>
+          
+        </div>
+      </div>
+    </div>
+    <%  if (products) { %> <% for(var i = 0; i < products.length; i++) { %>
+    <div class="col-6 col-md-4 col-lg-2 mb-4">
+
+      <div class="card shadow-sm h-100 rounded-0">
+        <img src="<%= products[i].content %>"  class="card-img-top imgProduct" onerror="this.onerror=null;this.src='/img/no-image.png';">
+        
+        
+        <div class="card-body">
+          <p class="mb-0 fw-bold "><%= products[i].title %></p>
+        </div>
+        <div class="card-footer text-muted bg-white">
+
+          <table class="table table-borderless mb-0">
+            <tr>
+              <td width="60%"><%= products[i].price %></td>
+              <td width="20%" class="text-end"><a class="text-black" href="/update/<%= products[i].id %>"><i class='bx bxs-pencil'></i></a></td>
+              <td width="20%" class="text-end"><a data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-black deleteBtn pointer" data-id="<%= products[i].id %>"><i class='bx bxs-trash-alt'></i></a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% } %> <% } %>
+
+
+  </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<!-- <button type="button" data-id="22" class="btn btn-primary deleteBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Confirm delete product ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="#" class="btn btn-danger" id="deleteUrl">Confirm Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resetModalLabel">Warning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Confirm reset data ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form  action="/reset" method="POST">
+          <button type="submit" class="btn btn-danger">Confirm Reset</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+  crossorigin="anonymous"></script>
+
+<script>
+  $(".deleteBtn").on('click', function(event){
+        var dataId = $(this).attr("data-id");  
+        $("#deleteUrl").attr("href", "/delete/"+dataId)
+});
+
+var getcategory = (new URL(location.href)).searchParams.get('category');
+var getlimit = (new URL(location.href)).searchParams.get('limit');
+
+console.log(getcategory);
+console.log(getlimit);
+
+if(getcategory){
+  $("#category").val(getcategory).change();
+}
+if(getlimit){
+  $("#limit").val(getlimit);
+}
+
+
+</script>
+
+<%- include("partials/_footer") %>

@@ -1,0 +1,78 @@
+<%- include("partials/_header") %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-5 offset-md-3 card bordered-0 mb-5 px-0">
+
+
+      <img src="<%= products.content %>"  class="card-img-top imgProduct" onerror="this.onerror=null;this.src='/img/no-image.png';">
+      <div class="card-body">
+        <form action="/update/<%= products.id %>" method="POST">
+            <label class="form-label fw-bold">Judul</label>
+            <input
+                required
+                type="text"
+                name="name"
+                value="<%= products.title %>"
+                placeholder="Judul"
+                class="form-control mb-3"
+            />
+            <label class="form-label fw-bold">Harga</label>
+            <input
+                required
+                type="number"
+                name="price"
+                value="<%= products.price%>"
+                placeholder="Harga"
+                class="form-control mb-3"
+            />
+            <label class="form-label fw-bold">Stok</label>
+            <input
+                required
+                type="number"
+                name="stock"
+                value="<%= products.stock %>"
+                placeholder="Stok"
+                class="form-control mb-3"
+            />
+            <label class="form-label fw-bold">Kategori</label>
+            <select class="form-select" required name="category" id="category">
+                
+
+                <%  if (category) { %> <% for(var i = 0; i < category.length; i++) { %>
+                    <option value="<%= category[i].id %>"><%= category[i].name %></option>
+                <% } %> <% } %>
+
+            </select>
+
+            
+            <label class="form-label fw-bold mt-3">Image</label>
+            <input
+                type="file"
+                name="image"
+                class="form-control mb-3"
+            />
+
+            <button type="submit" class="btn btn-dark btn-lg w-100 my-4 fw-bold">Simpan</button>
+            <a href="/" class="btn btn-link text-black text-decoration-none w-100"><i class='bx bx-chevron-lefts'></i><strong>Kembali</strong></a>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+  crossorigin="anonymous"></script>
+
+<script>
+
+$("#category").val("<%= products.category_id %>").change();
+
+</script>
+
+<%- include("partials/_footer") %>

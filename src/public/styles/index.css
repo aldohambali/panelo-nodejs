@@ -1,0 +1,9 @@
+.imgProduct {
+  width: 100%;
+  height: 15vw;
+  /* object-fit: cover; */
+  object-fit: contain;
+}
+.pointer{
+  cursor: pointer;
+}
