@@ -47,7 +47,7 @@ export const updateProducts = async (req, res) => {
   const { id } = req.params;
   const products = req.body;
   console.log('updateProducts : ',products)
-  
+
   await pool.query("UPDATE price set ? WHERE term_id = ?", [ { price: products['price'] }, id]);
   await pool.query("UPDATE stock set ? WHERE term_id = ?", [ { stock: products['stock'] }, id]);
   await pool.query("UPDATE products set ? WHERE id = ?", [ { category_id: products['category'], title: products['name'] }, id]);
@@ -58,7 +58,7 @@ export const updateProducts = async (req, res) => {
       console.log('update image')
       const checkId = await pool.query("SELECT content from preview where term_id = ?", [id]);
       console.log('checkId',checkId)
-      if(checkId){
+      if(checkId.content){
         await pool.query("UPDATE preview set ? WHERE term_id = ?", [ { content: "/uploads/"+imageName }, id]);
       } else {
         await pool.query("INSERT into preview set ?", [ { term_id: id, type:"preview", content: "/uploads/"+imageName } ]);

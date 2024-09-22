@@ -15,6 +15,21 @@ npm i
 npm start
 ```
 
+## Screenshot
+
+
+![Screenshot1](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_1.png)
+
+![Screenshot2](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_2.png)
+
+![Screenshot3](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_3.png)
+
+![Screenshot4](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_4.png)
+
+![Screenshot5](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_5.png)
+
+![Screenshot6](https://github.com/aldohambali/panelo-nodejs/blob/main/Screenshot_6.png)
+
 
 ## Basic Data
 
@@ -205,7 +220,10 @@ get response from API [https://portal.panelo.co/paneloresto/api/productlist/18](
   ]
 }
 ```
-
+## Future development
+- pagination
+- unlink image
+- clear uploads on reset
 
 ## License
 
