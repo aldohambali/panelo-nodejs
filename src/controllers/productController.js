@@ -52,6 +52,19 @@ export const updateProducts = async (req, res) => {
   await pool.query("UPDATE stock set ? WHERE term_id = ?", [ { stock: products['stock'] }, id]);
   await pool.query("UPDATE products set ? WHERE id = ?", [ { category_id: products['category'], title: products['name'] }, id]);
 
+  const imageName = (req.file) ? req.file.filename : null;
+  console.log('imageName : ',imageName)
+  if(imageName){
+      console.log('update image')
+      const checkId = await pool.query("SELECT content from preview where term_id = ?", [id]);
+      console.log('checkId',checkId)
+      if(checkId){
+        await pool.query("UPDATE preview set ? WHERE term_id = ?", [ { content: "/uploads/"+imageName }, id]);
+      } else {
+        await pool.query("INSERT into preview set ?", [ { term_id: id, type:"preview", content: "/uploads/"+imageName } ]);
+      }
+  }
+
 
   res.redirect('/');
 };
@@ -77,6 +90,13 @@ export const saveProducts = async (req, res) => {
     console.log('add stok n price');
     await pool.query( "INSERT INTO price set ?",[ { price: products['price'], term_id: lastInsertId }])
     await pool.query( "INSERT INTO stock set ?",[ { stock: products['stock'], term_id: lastInsertId }])
+
+    const imageName = (req.file) ? req.file.filename : null;
+    console.log('imageName : ',imageName)
+    if(imageName){
+      await pool.query("INSERT into preview set ?", [ { term_id: lastInsertId, type:"preview", content: "/uploads/"+imageName } ]);
+    }
+  
   }
 
   res.redirect('/');

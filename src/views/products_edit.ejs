@@ -7,7 +7,15 @@
 
       <img src="<%= products.content %>"  class="card-img-top imgProduct" onerror="this.onerror=null;this.src='/img/no-image.png';">
       <div class="card-body">
-        <form action="/update/<%= products.id %>" method="POST">
+        <form action="/update/<%= products.id %>" method="POST" enctype="multipart/form-data">
+          
+            <label class="form-label fw-bold mt-3">Image</label>
+            <input
+                type="file"
+                name="image"
+                class="form-control mb-3" accept="image/*"
+            />
+
             <label class="form-label fw-bold">Judul</label>
             <input
                 required
@@ -46,12 +54,6 @@
             </select>
 
             
-            <label class="form-label fw-bold mt-3">Image</label>
-            <input
-                type="file"
-                name="image"
-                class="form-control mb-3"
-            />
 
             <button type="submit" class="btn btn-dark btn-lg w-100 my-4 fw-bold">Simpan</button>
             <a href="/" class="btn btn-link text-black text-decoration-none w-100"><i class='bx bx-chevron-lefts'></i><strong>Kembali</strong></a>

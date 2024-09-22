@@ -7,7 +7,15 @@
 
       <img src="/img/no-image.png"  class="card-img-top imgProduct" onerror="this.onerror=null;this.src='/img/no-image.png';">
       <div class="card-body">
-        <form action="/add" method="POST">
+        <form action="/add" method="POST" enctype="multipart/form-data">
+
+            <label class="form-label fw-bold mt-3">Image</label>
+            <input
+                type="file"
+                name="image"
+                class="form-control mb-3" accept="image/*"
+            />  
+
             <label class="form-label fw-bold">Judul</label>
             <input
                 required
